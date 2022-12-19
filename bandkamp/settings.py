@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import dj_database_url
-from django.core.management.utils import get_random_secret_key
 import os
 import dotenv
 
@@ -26,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
@@ -108,8 +107,6 @@ DATABASE_ULR = os.getenv("DATABASE_URL")
 if DATABASE_URL:
     db_deploy = dj_database_url.config(
         default=DATABASE_URL,
-        conn_max_age=500,
-        ssl_require=True,
     )
     DATABASES["default"].update(db_deploy)
     DEBUG = False
